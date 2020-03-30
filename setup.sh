@@ -6,7 +6,7 @@
 getnetinfo()
 {
     read -p "Please enter the hostname [Leave blank to keep the default 'raspberrypi']: " hostname
-    read -p "Enter static IP [leave blank for dhcp]: " staticip
+    read -p "Enter static IP [leave blank current]: " staticip
     if [ -n "$staticip" ]
     then    
         ipmode="static"
@@ -49,6 +49,7 @@ EOF
 
 sethostname()
 {
+    echo
     if [ -z "$hostname" ]
     then
         echo "Setting hostname..."
@@ -147,6 +148,8 @@ autosystemupdates()
 }
 
 # Setup networking.
+echo
+echo -e "\e[1;92m----------Starting Installation----------\e[0m\n"
 getnetinfo
 
 file="/etc/network/interfaces"
