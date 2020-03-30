@@ -241,14 +241,18 @@ else
     ipv4=$(/sbin/ip -o -4 addr list eth0 | awk '{print $4}' | cut -d/ -f1)
 fi
 
-# Install Pihole.
+# Install Pi-hole.
 echo
-echo -e "\e[1;92mInstalling Pihole...\e[0m"
+echo -e "\e[1;92mInstalling Pi-hole...\e[0m"
 # read -p "Install beta version (v5.0)?: " version
 echo "Setting up pre-install files..."
 mkdir /etc/pihole
 chmod 755 /etc/pihole
-cp /home/pi/PiHole-Deploy/{setupVars.conf,adlists.list} /etc/pihole
+curl -sSLO https://raw.githubusercontent.com/jasonhaymond/Hosts-Lists/master/Blocklists/dbl-oisd-nl.list
+curl -sSLO https://raw.githubusercontent.com/jasonhaymond/Hosts-Lists/master/Whitelists/whitelist.list
+curl -sSLO https://raw.githubusercontent.com/jasonhaymond/Hosts-Lists/master/Blacklists/blacklist.list
+mv ./dbl-oisd-nl.list ./adlists.list
+cp /home/pi/PiHole-Deploy/{setupVars.conf,adlists.list,whitelist.list,blacklist.list} /etc/pihole
 echo "IPV4_ADDRESS=$ipv4" >> /etc/pihole/setupVars.conf
 echo "IPV6_ADDRESS=" >> /etc/pihole/setupVars.conf
 echo "Downloading and running Pihole installer..."
