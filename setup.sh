@@ -183,9 +183,10 @@ user="pi"
 setpassword "$user"
 
 # Create new user(s).
-createuser
+# createuser
 
 # Install ZeroTier or no.
+echo
 echo -e "\e[1;92mInstalling ZeroTier...\e[0m\n"
 read -p "Install ZeroTier [y/n, default is 'y']: " zerotierinstall
 if [ "$zerotierinstall" = "y" ] || [ "$zerotierinstall" = "Y" ] || [ "$zerotierinstall" = "" ]
