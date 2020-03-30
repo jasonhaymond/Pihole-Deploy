@@ -188,6 +188,7 @@ setpassword "$user"
 # Install ZeroTier or no.
 echo
 echo -e "\e[1;92mInstalling ZeroTier...\e[0m\n"
+sleep 0.5
 read -p "Install ZeroTier [y/n, default is 'y']: " zerotierinstall
 if [ "$zerotierinstall" = "y" ] || [ "$zerotierinstall" = "Y" ] || [ "$zerotierinstall" = "" ]
 then
@@ -224,6 +225,7 @@ fi
 # Install Pihole.
 echo
 echo -e "\e[1;92mInstalling Pihole...\e[0m"
+# read -p "Install beta version (v5.0)?: " version
 echo "Setting up pre-install files..."
 mkdir /etc/pihole
 chmod 755 /etc/pihole
@@ -234,6 +236,7 @@ echo "Downloading and running Pihole installer..."
 curl -LO https://install.pi-hole.net | bash /dev/stdin --unattended
 echo
 echo -e "\e[1;92mPlease set the Pihole web interface password...\e[0m"
+sleep 0.5
 pihole -a password
 
 # Install ZeroTier and join network.
