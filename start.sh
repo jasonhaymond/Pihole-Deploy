@@ -10,7 +10,7 @@ echo "Downloading installation files..."
 git clone https://github.com/jasonhaymond/Pihole-Deploy.git
 
 cd ./Pihole-Deploy
-sh ./install.sh | tee ./piholeinstall.log
+sh ./setup.sh | tee ./piholeinstall.log
 finish
 
 finish()
