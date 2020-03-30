@@ -121,8 +121,10 @@ setpassword()
             echo "Sorry, passwords do not match.  Try again."
             setpassword
         fi
+        # Reset shadow in case there is an auth issue.
+        pwconv
         echo -e "$password1\n$password1" | passwd "$user"
-        echo "Password changed."
+        echo
     else
         echo "Password could not be updated for '$user' because the user does not exist."
         createuser "$user"
@@ -150,6 +152,7 @@ autosystemupdates()
 # Setup networking.
 echo
 echo -e "\e[1;92m----------Starting Installation----------\e[0m\n"
+sleep 0.5
 getnetinfo
 
 file="/etc/network/interfaces"

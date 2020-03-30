@@ -4,7 +4,8 @@ Used for deploying Pihole servers
 # Installation
 Run the following commands in the terminal:
 ```bash
-curl -sSLO https://raw.gitusercontent.com/jasonhaymond/Pihole-Deploy/master/start.sh | sudo sh bash
+curl -sSLO https://raw.gitusercontent.com/jasonhaymond/Pihole-Deploy/master/start.sh
+sudo sh start.sh
 ```
 
 # Todo List
