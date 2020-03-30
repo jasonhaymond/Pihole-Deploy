@@ -157,7 +157,7 @@ autosystemupdates()
 
 isinstalled()
 [
-    dpkg -s $1 &> /dev/null
+    dpkg -s $pkg &> /dev/null
 
     if [ $? -eq 0 ]
     then
@@ -261,6 +261,7 @@ echo
 echo -e "\e[1;92mPlease set the Pihole web interface password...\e[0m"
 sleep 0.5
 pihole -a password
+pihole -g
 
 # Install ZeroTier and join network.
 if [ "$zerotierinstall" = "y" ] || [ "$zerotierinstall" = "Y" ] || [ "$zerotierinstall" = "" ]
