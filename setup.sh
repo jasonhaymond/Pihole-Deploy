@@ -157,16 +157,21 @@ autosystemupdates()
 
 isinstalled()
 [
-    sleep 10
-    dpkg -s $pkg &> /dev/null
-    if [ $? -eq 0 ]
-    then
-        installed=1
-        echo "Package '$pkg' is installed!"
-    else
-        installed=0
-        echo "Package '$pkg' is NOT installed!"
-    fi
+    dpkg -l $pkg > /dev/null 2>&1
+    case $? in
+        0)
+            installed=1
+            echo "Package '$pkg' is installed!"
+            ;;
+        1)
+            installed=0
+            echo "Package '$pkg' is NOT installed!"
+            ;;
+        2)
+            installed=""
+            echo "An error occurred."
+            ;;
+    esac
 ]
 
 # Setup networking.
