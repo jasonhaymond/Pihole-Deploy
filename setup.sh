@@ -137,17 +137,37 @@ autosystemupdates()
     
     # Deploy crontab task to download and install updates on a schedule.
     echo
-    echo "Automatic updates setup is still under development."
-    #read -p "Custom schedule? [y/n]: " settype
-    #if [ "$settype" = "y" ] || [ "$settype" = "Y" ]
-    #then
-        # Get custom schedule here.
-    #elif [ "$settype" = "n" ] || [ "$settpye" = "N" ]
-    #then
-        # Use default schedule here.
-    #fi
+    # echo "Automatic updates setup is still under development."
+    
+    pkg="unattended-upgrades"
+    isinstalled "$pkg"
 
+    if [ $installed -eq "0" ]
+    then
+        apt-get install unattended-upgrades
+        apt-get install mailutils
+        apt-get install update-notifier-common
+        dpkg-reconfigure --priority=low unattended-upgrades
+        echo unattended-upgrades unattended-upgrades/enable_auto_updates boolean true | debconf-set-selections
+        dpkg-reconfigure -f noninteractive unattended-upgrades
+    else
+        echo "package $pkg is already installed."
+    fi
 }
+
+isinstalled()
+[
+    dpkg -s $1 &> /dev/null
+
+    if [ $? -eq 0 ]
+    then
+        installed=1
+        echo "Package '$pkg' is installed!"
+    else
+        installed=0
+        echo "Package '$pkg' is NOT installed!"
+    fi
+]
 
 # Setup networking.
 echo
@@ -187,7 +207,6 @@ setpassword "$user"
 
 # Install ZeroTier or no.
 echo
-echo -e "\e[1;92mInstalling ZeroTier...\e[0m\n"
 sleep 0.5
 read -p "Install ZeroTier [y/n, default is 'y']: " zerotierinstall
 if [ "$zerotierinstall" = "y" ] || [ "$zerotierinstall" = "Y" ] || [ "$zerotierinstall" = "" ]
@@ -242,6 +261,7 @@ pihole -a password
 # Install ZeroTier and join network.
 if [ "$zerotierinstall" = "y" ] || [ "$zerotierinstall" = "Y" ] || [ "$zerotierinstall" = "" ]
 then
+    echo -e "\e[1;92mInstalling ZeroTier...\e[0m\n"
     curl -LO https://raw.githubuercontent.com/jasonhaymond/Linux/master/Software-Installations/ZeroTier
     source ./ZeroTier/start.sh
     installzerotier "$networkid"
@@ -254,6 +274,6 @@ autosystemupdates
 
 finish()
 {
-    echo -e "\e[1;92mSetup is complete.  Exiting script.\e[0m"
+    echo -e "\e[1;92mSetup is complete.  Exiting setup script.\e[0m"
 }
 trap finish exit
