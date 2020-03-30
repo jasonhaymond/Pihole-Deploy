@@ -158,7 +158,7 @@ autosystemupdates()
 isinstalled()
 [
     #dpkg -s $pkg &> /dev/null
-
+    sleep 5
     if [ $? -eq 0 ]
     then
         installed=1
