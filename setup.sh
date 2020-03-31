@@ -251,13 +251,18 @@ echo
 echo -e "\e[1;92mInstalling Pi-hole...\e[0m"
 # read -p "Install beta version (v5.0)?: " version
 echo "Setting up pre-install files..."
-mkdir /etc/pihole
+if [ -z /etc/pihole ]
+then
+    mkdir /etc/pihole
+fi
 chmod 755 /etc/pihole
+
 curl -LO https://raw.githubusercontent.com/jasonhaymond/Hosts-Lists/master/Blocklists/dbl-oisd-nl.list
 curl -LO https://raw.githubusercontent.com/jasonhaymond/Hosts-Lists/master/Whitelists/whitelist.list
 curl -LO https://raw.githubusercontent.com/jasonhaymond/Hosts-Lists/master/Blacklists/blacklist.list
+
 mv ./dbl-oisd-nl.list ./adlists.list
-cp /home/pi/PiHole-Deploy/{setupVars.conf,adlists.list,whitelist.list,blacklist.list} /etc/pihole
+cp /home/pi/Pihole-Deploy/{setupVars.conf,adlists.list,whitelist.list,blacklist.list} /etc/pihole
 echo "IPV4_ADDRESS=$ipv4" >> /etc/pihole/setupVars.conf
 echo "IPV6_ADDRESS=" >> /etc/pihole/setupVars.conf
 echo "Downloading and running Pihole installer..."
@@ -269,7 +274,7 @@ pihole -a password
 pihole -g
 
 # Install ZeroTier and join network.
-if [ "$zerotierinstall" = "y" ] || [ "$zerotierinstall" = "Y" ] || [ "$zerotierinstall" = "" ]
+if [ "$zerotierinstall" = "y" ] || [ "$zerotierinstall" = "Y" ]
 then
     echo -e "\e[1;92mInstalling ZeroTier...\e[0m\n"
     curl -LO https://raw.githubuercontent.com/jasonhaymond/Linux/master/Software-Installations/ZeroTier
