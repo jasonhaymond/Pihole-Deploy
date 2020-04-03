@@ -1,14 +1,16 @@
 # PiHole-Deploy
 Used for deploying Pihole servers
 
-# Installation
+## Installation
 Run the following commands in the terminal:
 ```bash
 curl -sSLO https://raw.gitusercontent.com/jasonhaymond/Pihole-Deploy/master/start.sh
 sudo bash start.sh
 ```
+## Notes
+https://github.com/stevejenkins/pihole-cloudsync
 
-# Todo List
+## Todo List
 - Add function for system scheduled automatic updates.
     -  https://askubuntu.com/questions/923535/schedule-apt-get-script-using-cron
     - https://wiki.debian.org/UnattendedUpgrades
